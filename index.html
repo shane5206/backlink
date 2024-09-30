@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>批量反向連結生成器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+        }
+        .backlink {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>批量反向連結生成器</h1>
+        <textarea id="targetUrls" placeholder="輸入目標網址，每行一個"></textarea>
+        <button onclick="generateBacklinks()">生成反向連結</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function generateBacklinks() {
+            const targetUrls = document.getElementById('targetUrls').value.split('\n');
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<h2>生成的反向連結:</h2>';
+
+            targetUrls.forEach(url => {
+                url = url.trim();
+                if (url) {
+                    const backlink = `<a href="${url}" target="_blank">訪問網站 - ${url}</a>`;
+                    const backlinkHtml = `
+                        <div class="backlink">
+                            <p>${backlink}</p>
+                            <strong>HTML 代碼:</strong>
+                            <textarea readonly style="width: 100%; height: 50px;">${backlink}</textarea>
+                        </div>
+                    `;
+                    resultDiv.innerHTML += backlinkHtml;
+
+                    // 在實際頁面中創建反向連結
+                    const backlinkContainer = document.createElement('div');
+                    backlinkContainer.innerHTML = backlink;
+                    document.body.appendChild(backlinkContainer);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
